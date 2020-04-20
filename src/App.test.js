@@ -1,11 +1,11 @@
 import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, userEvent, waitFor } from "@testing-library/react";
+
 import App from "./App";
 
 import { fetchShow as mockFetchShow } from "./api/fetchShow";
 
-//mockt fetchShow function
+//mock fetchShow function
 jest.mock("./api/fetchShow");
 console.log(mockFetchShow);
 
@@ -18,24 +18,53 @@ const episodesData = {
     },
     summary:
       "A young boy mysteriously disappears, and his panicked mother demands that the police find him. Meanwhile, the boy's friends conduct their own search, and meet a mysterious girl in the forest",
-      _embedded: {
-          episodes: [
-              {
-                  season: 1,
-                  number: 2,
-                  airtime: "",
-                },
-                {
-                    season: 2,
-                    number: 3,
-                    airtime: "",
-                },
-                {
-                    season: 3,
-                    number: 4,
-                    airtime: "",
-                },
-            ],
+    _embedded: {
+      episodes: [
+        {
+          season: 1,
+          number: 2,
+          airtime: "",
         },
-    },//end of data object
-};//end of episodesData object
+        {
+          season: 2,
+          number: 3,
+          airtime: "",
+        },
+        {
+          season: 3,
+          number: 4,
+          airtime: "",
+        },
+      ],
+    },
+  }, //end of data object
+}; //end of episodesData object
+
+//async/await
+
+test("renders episodes data when button is clicked", async () => {
+  mockFetchShow.mockResolvedValueOnce(episodesData);
+  //render App component
+  const { getByText, debug, queryAllByTestId, queryAllByRole } = render(
+    <App />
+  );
+  debug();
+
+  //Userevent click dropdown
+
+  // const button = queryAllByRole(/placeholder/i);
+
+
+  //await data to be fetched
+  await waitFor(() => {
+    const button = getByText(/select a season/i);
+    userEvent.click(getByText(button));
+
+    expect(mockFetchShow).toHaveBeenCalledTimes(1);
+  });
+
+  //dropdown
+  const options = queryAllByRole(/option/i);
+  expect(options[0]).toHaveTextContent("Season 1");
+  expect(options[1]).toHaveTextContent("Season 2");
+});
