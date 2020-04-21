@@ -36,8 +36,8 @@ export default function App() {
 
   return (
     <div className="App">
-      <img className="poster-img" src={show.image.original} alt={show.name} />
-      <h1>{show.name}</h1>
+      <img data-testid="poster-img"className="poster-img" src={show.image.original} alt={show.name} />
+      <h1 data-testid="name">{show.name}</h1>
       {parse(show.summary)}
       <Dropdown
         options={Object.keys(seasons)}
@@ -45,6 +45,7 @@ export default function App() {
         value={selectedSeason || "Select a season"}
         placeholder="Select an option"
         data-testid='dropdown'
+        id="dropdown"
       />
       <Episodes episodes={episodes} />
     </div>
