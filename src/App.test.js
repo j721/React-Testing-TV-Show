@@ -633,28 +633,7 @@ const showData = {
               href: 'http://api.tvmaze.com/episodes/1576475'
             }
           }
-        },
-        {
-          id: 1576476,
-          url: 'http://www.tvmaze.com/episodes/1576476/stranger-things-3x08-chapter-eight-the-battle-of-starcourt',
-          name: 'Chapter Eight: The Battle of Starcourt',
-          season: 3,
-          number: 8,
-          airdate: '2019-07-04',
-          airtime: '',
-          airstamp: '2019-07-04T12:00:00+00:00',
-          runtime: 78,
-          image: {
-            medium: 'http://static.tvmaze.com/uploads/images/medium_landscape/204/510105.jpg',
-            original: 'http://static.tvmaze.com/uploads/images/original_untouched/204/510105.jpg'
-          },
-          summary: '<p>The Flayer comes to the mall to get El, and Dustin contacts Suzie to provide Jim and Joyce with needed information. El reminds Billy of his past, and Jim and Joyce have an argument about not arguing.</p>',
-          _links: {
-            self: {
-              href: 'http://api.tvmaze.com/episodes/1576476'
-            }
-          }
-        },
+        }
       ]
     }
 }}
@@ -670,9 +649,8 @@ test('select season data should render episodes data', async () => {
         userEvent.click(seasonOne)
     }) 
     await waitFor(()=>{
-        expect(queryAllByTestId(/episode/i)).toHaveLength(0)
+        expect(queryAllByTestId(/episode/i)).toHaveLength(8)
     })
 })
 
 
-//.toHaveLength(7) doesn't work for some reason
