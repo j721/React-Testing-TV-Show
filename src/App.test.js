@@ -5,7 +5,7 @@ import App from './App';
 import { fetchShow as mockFetchShow } from './api/fetchShow';
 
 jest.mock('./api/fetchShow');
-const showData = {
+const episodesData = {
     data: {
     id: 2993,
     url: 'http://www.tvmaze.com/shows/2993/stranger-things',
@@ -567,7 +567,9 @@ const showData = {
 }}
 
 test('select season data should render episodes data', async () => {
-    mockFetchShow.mockResolvedValueOnce(showData);
+    //passing in mock data
+    mockFetchShow.mockResolvedValueOnce(episodesData);
+    //render app
     const { getByText, queryAllByTestId } = render(<App />);
 
     await waitFor(()=> {
@@ -582,3 +584,16 @@ test('select season data should render episodes data', async () => {
 })
 
 
+test('dropdown data should be rendered', async ()=>{
+    mockFetchShow.mockResolvedValueOnce(episodesData);
+    const {getByText, getAllByText} = render (<App/>)
+
+    await waitFor(()=>expect(getByText(/select a season/i)));
+    const selectDropdown = getByText(/select a season/i);
+
+    userEvent.click(selectDropdown);
+
+    await waitFor(()=>expect(
+        getAllByText(/season/i)).toHaveLength(4)
+    )
+})
