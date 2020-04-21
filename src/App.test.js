@@ -655,24 +655,6 @@ const showData = {
             }
           }
         },
-        {
-          id: 1752754,
-          url: 'http://www.tvmaze.com/episodes/1752754/stranger-things-4x01-chapter-one-the-hellfire-club',
-          name: 'Chapter One: The Hellfire Club',
-          season: 4,
-          number: 1,
-          airdate: '',
-          airtime: '',
-          airstamp: null,
-          runtime: 60,
-          image: null,
-          summary: null,
-          _links: {
-            self: {
-              href: 'http://api.tvmaze.com/episodes/1752754'
-            }
-          }
-        }
       ]
     }
 }}
@@ -684,8 +666,8 @@ test('select season data should render episodes data', async () => {
     await waitFor(()=> {
         const dropdown = getByText(/select a season/i);
         userEvent.click(dropdown)
-        const season1Dropdown = getByText(/season 1/i)
-        userEvent.click(season1Dropdown)
+        const seasonOne = getByText(/season 1/i)
+        userEvent.click(seasonOne)
     }) 
     await waitFor(()=>{
         expect(queryAllByTestId(/episode/i)).toHaveLength(0)
@@ -693,4 +675,4 @@ test('select season data should render episodes data', async () => {
 })
 
 
-//.toHaveLength(8) doesn't work for some reason
+//.toHaveLength(7) doesn't work for some reason
